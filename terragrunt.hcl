@@ -1,0 +1,58 @@
+terraform {
+  source = "github.com/yegorovev/tf_aws_network.git"
+
+  before_hook "tfsec" {
+    commands = ["plan", "apply"]
+    execute  = ["tfsec", "."]
+  }
+}
+
+
+locals {
+  env_vars    = read_terragrunt_config(find_in_parent_folders("common.hcl")).inputs
+  profile     = local.env_vars.profile
+  region      = local.env_vars.region
+  bucket_name = local.env_vars.bucket_name
+  lock_table  = local.env_vars.lock_table
+  key         = local.env_vars.key
+  tags        = jsonencode(local.env_vars.tags)
+  vpc_cidr    = local.env_vars.vpc_cidr
+  vpc_name    = local.env_vars.vpc_name
+}
+
+remote_state {
+  backend = "s3"
+  generate = {
+    path      = "backend.tf"
+    if_exists = "overwrite_terragrunt"
+  }
+  config = {
+    bucket_name = local.bucket_name
+    key         = local.key
+    region      = local.region
+    encrypt     = true
+    lock_table  = local.lock_table
+  }
+}
+
+generate "provider" {
+  path      = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<EOF
+provider "aws" {
+  profile = "${local.profile}"
+  region  = "${local.region}"
+  default_tags {
+    tags = jsondecode(<<INNEREOF
+${local.tags}
+INNEREOF
+)
+  }
+}
+EOF
+}
+
+inputs = {
+  vpc_cidr = local.vpc_cidr
+  vpc_name = local.vpc_name
+}
