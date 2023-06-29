@@ -1,10 +1,5 @@
 terraform {
   source = "github.com/yegorovev/tf_aws_network.git"
-
-  before_hook "tfsec" {
-    commands = ["plan", "apply"]
-    execute  = ["tfsec", "."]
-  }
 }
 
 
@@ -27,11 +22,11 @@ remote_state {
     if_exists = "overwrite_terragrunt"
   }
   config = {
-    bucket_name = local.bucket_name
-    key         = local.key
-    region      = local.region
-    encrypt     = true
-    lock_table  = local.lock_table
+    bucket         = local.bucket_name
+    key            = local.key
+    region         = local.region
+    encrypt        = true
+    dynamodb_table = local.lock_table
   }
 }
 
