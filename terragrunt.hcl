@@ -4,15 +4,18 @@ terraform {
 
 
 locals {
-  env_vars    = read_terragrunt_config(find_in_parent_folders("common.hcl")).inputs
-  profile     = local.env_vars.profile
-  region      = local.env_vars.region
-  bucket_name = local.env_vars.bucket_name
-  lock_table  = local.env_vars.lock_table
-  key         = local.env_vars.key
-  tags        = jsonencode(local.env_vars.tags)
-  vpc_cidr    = local.env_vars.vpc_cidr
-  vpc_name    = local.env_vars.vpc_name
+  env_vars       = read_terragrunt_config(find_in_parent_folders("common.hcl")).inputs
+  profile        = local.env_vars.profile
+  region         = local.env_vars.region
+  bucket_name    = local.env_vars.bucket_name
+  lock_table     = local.env_vars.lock_table
+  key            = local.env_vars.key
+  tags           = jsonencode(local.env_vars.tags)
+  vpc_cidr       = local.env_vars.vpc_cidr
+  vpc_name       = local.env_vars.vpc_name
+  subnets_list   = local.env_vars.subnets_list
+  igw_name       = local.env_vars.igw_name
+  application_sg = local.env_vars.application_sg
 }
 
 remote_state {
