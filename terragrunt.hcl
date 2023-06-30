@@ -48,6 +48,9 @@ EOF
 }
 
 inputs = {
-  vpc_cidr = local.vpc_cidr
-  vpc_name = local.vpc_name
+  vpc_cidr       = local.vpc_cidr
+  vpc_name       = local.vpc_name
+  subnets_list   = local.subnets_list
+  igw_name       = local.igw_name
+  application_sg = local.application_sg
 }
