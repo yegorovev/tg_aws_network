@@ -4,7 +4,7 @@ terraform {
 
 
 locals {
-  env_vars             = read_terragrunt_config(find_in_parent_folders("common.hcl")).inputs
+  env_vars             = read_terragrunt_config(find_in_parent_folders("common_net.hcl")).inputs
   profile              = local.env_vars.profile
   region               = local.env_vars.region
   bucket_name          = local.env_vars.bucket_name
@@ -17,6 +17,7 @@ locals {
   igw_name             = local.env_vars.igw_name
   application_sg       = local.env_vars.application_sg
   enable_dns_hostnames = local.env_vars.enable_dns_hostnames
+  rt                   = local.env_vars.rt
 }
 
 remote_state {
@@ -58,4 +59,5 @@ inputs = {
   igw_name             = local.igw_name
   application_sg       = local.application_sg
   enable_dns_hostnames = local.enable_dns_hostnames
+  rt                   = local.rt
 }
