@@ -4,7 +4,9 @@ terraform {
 
 
 locals {
-  env_vars             = read_terragrunt_config(find_in_parent_folders("common_net.hcl")).inputs
+  parameters_file = get_env("TG_PARAMS_FILE", "common_default_net.hcl")
+
+  env_vars             = read_terragrunt_config(find_in_parent_folders(local.parameters_file)).inputs
   profile              = local.env_vars.profile
   region               = local.env_vars.region
   bucket_name          = local.env_vars.bucket_name
