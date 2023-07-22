@@ -20,6 +20,8 @@ locals {
   application_sg       = local.env_vars.application_sg
   enable_dns_hostnames = local.env_vars.enable_dns_hostnames
   rt                   = local.env_vars.rt
+  rt_associations      = local.env_vars.rt_associations
+  routes               = local.env_vars.routes
 }
 
 remote_state {
@@ -62,4 +64,6 @@ inputs = {
   application_sg       = local.application_sg
   enable_dns_hostnames = local.enable_dns_hostnames
   rt                   = local.rt
+  rt_associations      = local.rt_associations
+  routes               = local.routes
 }
