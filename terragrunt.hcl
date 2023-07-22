@@ -1,7 +1,6 @@
 terraform {
-  source = "git@github.com:yegorovev/tf_aws_network.git?ref=v1.0.0"
+  source = "git@github.com:yegorovev/tf_aws_network.git?ref=v1.0.1"
 }
-
 
 locals {
   parameters_file = get_env("TG_PARAMS_FILE", "common_default_net.hcl")
