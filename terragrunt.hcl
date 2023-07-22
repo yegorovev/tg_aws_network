@@ -1,5 +1,5 @@
 terraform {
-  source = "git@github.com:yegorovev/tf_aws_network.git?ref=v1.0.1"
+  source = "git@github.com:yegorovev/tf_aws_network.git?ref=v1.0.2"
 }
 
 locals {
